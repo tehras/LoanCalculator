@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/constraintLayout2" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/list_view_margin_vertical"
+    android:background="@color/colorPrimary"
+    android:elevation="@dimen/default_elevation" android:orientation="vertical">
+
+    <LinearLayout android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="8dp"
+                  android:orientation="vertical"
+                  app:layout_constraintLeft_toLeftOf="@+id/constraintLayout2"
+                  app:layout_constraintRight_toRightOf="@+id/constraintLayout2"
+    >
+
+        <com.github.mikephil.charting.charts.LineChart android:id="@+id/landing_chart_view"
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="@dimen/line_chart_height"
+                                                       android:layout_marginBottom="-16dp"
+                                                       tools:ignore="MissingConstraints"
+                                                       tools:layout_editor_absoluteX="16dp"
+                                                       tools:layout_editor_absoluteY="0dp"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

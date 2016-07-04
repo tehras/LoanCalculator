@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/constraintLayout" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/list_view_margin_vertical"
+    android:layout_marginEnd="@dimen/list_view_margin_horizontal"
+    android:layout_marginStart="@dimen/list_view_margin_horizontal"
+    android:layout_marginTop="@dimen/list_view_margin_vertical"
+    android:background="@drawable/clickable_background"
+    android:baselineAligned="false"
+    android:clickable="true" android:elevation="@dimen/default_elevation"
+>
+
+    <android.support.v4.widget.ContentLoadingProgressBar android:id="@+id/loading_progress_bar"
+                                                         style="?android:attr/progressBarStyleLarge"
+                                                         android:layout_width="140dp"
+                                                         android:layout_height="140dp"
+                                                         android:indeterminateDrawable="@drawable/progressbar"
+                                                         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+                                                         tools:layout_constraintLeft_creator="1"
+                                                         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                                                         android:layout_marginTop="64dp"
+                                                         tools:layout_constraintTop_creator="1"
+                                                         app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+                                                         tools:layout_constraintRight_creator="1"
+                                                         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+                                                         android:layout_marginBottom="64dp"
+                                                         tools:layout_constraintBottom_creator="1"/>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/loading_progress_bar"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/loading_progress_bar"/>
+
+</android.support.constraint.ConstraintLayout>
