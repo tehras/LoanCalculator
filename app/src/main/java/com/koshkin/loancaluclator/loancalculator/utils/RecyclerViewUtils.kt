@@ -1,7 +1,9 @@
 package com.koshkin.loancaluclator.loancalculator.utils
 
+import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 
 /**
  * Created by koshkin on 7/4/16
@@ -15,5 +17,29 @@ fun RecyclerView.defaultRecyclerView() {
 
     // use a linear layout manager
     this.layoutManager = LinearLayoutManager(this.context)
+}
+
+fun RecyclerView.setExtraBottomPadding(bottom: Int) {
+    val decorator = viewItemDecorator
+    decorator.bottom = bottom
+
+    this.addItemDecoration(decorator)
+}
+
+object viewItemDecorator : RecyclerView.ItemDecoration() {
+
+    var top: Int = 0
+    var bottom: Int = 0
+
+    override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
+        val itemPosition = parent!!.getChildAdapterPosition(view)
+        val itemCount = state!!.itemCount
+
+        //first
+        if (itemPosition == 0)
+            outRect!!.top = top
+        else if (itemPosition == itemCount - 1)
+            outRect!!.bottom = bottom
+    }
 }
 

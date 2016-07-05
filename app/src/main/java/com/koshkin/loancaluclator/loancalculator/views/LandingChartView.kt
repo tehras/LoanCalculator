@@ -51,6 +51,8 @@ class LandingChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: In
 
         this.setDescription("")
         this.setNoDataText("Loading, Please Wait")
+        this.setDescriptionColor(Color.WHITE)
+        this.setNoDataTextColor(Color.WHITE)
 
         this.setTouchEnabled(false)
         this.extraBottomOffset = 20.toFloat()
@@ -73,6 +75,10 @@ class LandingChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: In
         data.initBalanceProperties()
         lineChart.data = data
         lineChart.animateX(500)
+    }
+
+    fun updateDescriptionError() {
+        lineChart.setNoDataText("Error retrieving data")
     }
 
     fun LineDataSet.initBalanceProperties() {

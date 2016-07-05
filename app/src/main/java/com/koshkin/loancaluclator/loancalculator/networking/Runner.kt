@@ -1,6 +1,7 @@
 package com.koshkin.loancaluclator.loancalculator.networking
 
 import android.os.AsyncTask
+import android.util.Log
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -26,11 +27,16 @@ class Runner : AsyncTask<Request, Void, Response>() {
         val response = Response(req!!.parsingObject)
         this.request = req
 
-        when (req.requestType) {
-            Request.Type.GET -> response.httpGet(req)
-            Request.Type.POST -> response.httpPost(req)
-            Request.Type.DELETE -> response.httpDelete(req)
-            Request.Type.PUT -> response.httpPut(req)
+        try {
+            when (req.requestType) {
+                Request.Type.GET -> response.httpGet(req)
+                Request.Type.POST -> response.httpPost(req)
+                Request.Type.DELETE -> response.httpDelete(req)
+                Request.Type.PUT -> response.httpPut(req)
+            }
+        } catch (e: Exception) {
+            Log.v(this.javaClass.simpleName, "Exception", e)
+            response.status = Response.ResponseStatus.FAILURE
         }
 
         return response
@@ -87,9 +93,9 @@ class Runner : AsyncTask<Request, Void, Response>() {
     }
 
     private fun getClient(): OkHttpClient {
-        if (client == null)
+        if (client == null) {
             client = OkHttpClient()
-
+        }
         return client as OkHttpClient
     }
 

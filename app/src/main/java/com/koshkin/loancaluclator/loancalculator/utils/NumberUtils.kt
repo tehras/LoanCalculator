@@ -11,3 +11,7 @@ var amountDisplayFormatter = DecimalFormat("#,###,###,##0.00")
 fun Double.numberDisplay(): String {
     return "$" + amountDisplayFormatter.format(this)
 }
+
+fun Double.interestDisplay(): String {
+    return this.toString() + "%"
+}
