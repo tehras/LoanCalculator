@@ -36,6 +36,45 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112869145235:android:cf4b5fe37b673870",
+        "android_client_info": {
+          "package_name": "com.koshkin.loancaluclator.loancalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "112869145235-4t3jr56imvrhc5m45dp4qaqj00if6k5a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.koshkin.loancaluclator.loancalculator",
+            "certificate_hash": "786CBDC865D2C3649745052A9DF0747E5ECAD92F"
+          }
+        },
+        {
+          "client_id": "112869145235-krm52qb7cpssl0vg3msij595mnnh5r5d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCESpdc_tTDmh9akSOWTgS8AR9A2I47rmM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

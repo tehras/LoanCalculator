@@ -1,4 +1,10 @@
 <resources>
+    <string name="client_id">
+        112869145235-krm52qb7cpssl0vg3msij595mnnh5r5d.apps.googleusercontent.com
+    </string>
+    <string name="facebook_application_id" translatable="false">261382924230611</string>
+
+
     <string name="app_name">LoanCalculator</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="landing_chart_aggregated_balances">Aggregated Data</string>

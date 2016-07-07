@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply from: "../common.gradle"
 
 android {
     compileSdkVersion 23
@@ -32,6 +33,11 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    //for Firebase UI
+    //    firebase and authentication
+//    compile 'com.google.firebase:firebase-auth:9.2.0'
+//    compile 'com.google.android.gms:play-services-auth:9.2.0'
+
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha3'
     compile 'com.google.code.gson:gson:2.6.2'
@@ -39,8 +45,16 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.0-RC1'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
     compile 'com.android.support:design:23.4.0'
-
     testCompile 'junit:junit:4.12'
+
+    compile "com.firebaseui:firebase-ui-auth:${project.ext.version}"
+    compile "com.google.firebase:firebase-core:${project.ext.firebase_version}"
+
+    // Firebase Authentication
+    compile "com.google.firebase:firebase-auth:${project.ext.firebase_version}"
+
+    // Google Sign In SDK (only required for Google Sign In)
+    compile "com.google.android.gms:play-services-auth:${project.ext.firebase_version}"
 }
 repositories {
     mavenCentral()
