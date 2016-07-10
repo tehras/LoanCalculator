@@ -9,11 +9,21 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="landing_chart_aggregated_balances">Aggregated Data</string>
     <string name="loading">Loading..</string>
+
     <string name="bottom_sheet_current_balance">Current Balance</string>
     <string name="bottom_sheet_interest">Interest</string>
-    <string name="bottom_sheet_as_of_date">As of Date</string>
-    <string name="bottom_sheet_payments">Payments</string>
+    <string name="bottom_sheet_as_of_date">Repayment Start Date</string>
+    <string name="bottom_sheet_payments">Monthly Payment $</string>
     <string name="bottom_sheet_title">Loan Information</string>
     <string name="bottom_sheet_loan_name">Loan Name</string>
+
+    <string name="new_loan_loan_name">Loan Name</string>
+    <string name="new_loan_provider">Loan Provider</string>
+    <string name="new_loan_amount">Loan Amount($)</string>
+    <string name="new_loan_interest">Interest(%)</string>
+    <string name="new_loan_base_payment">Base Payment($)</string>
+    <string name="new_loan_extra_payment">Extra Payment($)</string>
+    <string name="new_loan_repayment_start_date">Repayment Start Date</string>
+
     <string name="landing_error">Error loading results</string>
 </resources>

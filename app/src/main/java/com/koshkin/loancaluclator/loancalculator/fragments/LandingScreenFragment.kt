@@ -1,6 +1,7 @@
 package com.koshkin.loancaluclator.loancalculator.fragments
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,6 +34,12 @@ class LandingScreenFragment : BaseFragment(), NetworkResponse {
          * Return new instance of the fragment
          */
         fun create(): LandingScreenFragment = LandingScreenFragment()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        activity.showFab(R.drawable.ic_add_white) { View.OnClickListener { NewLoanFragment.create().startFragment(activity as AppCompatActivity, false) } }
     }
 
     override fun onResponse(response: Response, request: Request) {
@@ -101,9 +108,8 @@ class LandingScreenFragment : BaseFragment(), NetworkResponse {
                         (view.findViewById(R.id.landing_bottom_sheet_interest) as TextView).text = loan.interest.interestDisplay()
                         (view.findViewById(R.id.landing_bottom_sheet_balance) as TextView).text = loan.balance.numberDisplay()
                         (view.findViewById(R.id.landing_bottom_sheet_name) as TextView).text = loan.name
-                        (view.findViewById(R.id.landing_bottom_sheet_payments) as TextView).text = loan.payment.toString().payments()
+                        (view.findViewById(R.id.landing_bottom_sheet_payments) as TextView).text = loan.payment.numberDisplay()
                         (view.findViewById(R.id.landing_bottom_sheet_as_of_date) as TextView).text = loan.repaymentStartDate.asOfDate(inputDateFormat, outputDateFormat)
-
                     }
                 })
             }

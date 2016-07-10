@@ -4,12 +4,7 @@ import android.util.Log
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
-/**
- * Created by koshkin on 7/4/16.
- *
- * Date Utils
- */
-fun Long.asOfDate(inputFormat: SimpleDateFormat, outputDate: SimpleDateFormat): String {
+fun String.asOfDate(inputFormat: SimpleDateFormat, outputDate: SimpleDateFormat): String {
     var date = "N/A"
     try {
         date = outputDate.format(inputFormat.parse(this.toString()))

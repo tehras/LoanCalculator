@@ -2,11 +2,14 @@ package com.koshkin.loancaluclator.loancalculator.models.loans
 
 import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
+import java.io.Serializable
 
 /**
  * Created by koshkin on 7/4/16.
+ *
+ * Loan
  */
-class Loan {
+class Loan : Serializable {
 
     @SerializedName("Name")
     lateinit var name: String
@@ -20,29 +23,33 @@ class Loan {
     @SerializedName("Interest")
     var interest: Double = 0.0
 
-    @SerializedName("Payment")
+    @SerializedName("BasePayment")
     var payment: Double = 0.0
 
-    @SerializedName("RepaymentStartDate")
-    var repaymentStartDate: Long = 0
+    @SerializedName("ExtraPayment")
+    var extraPayment: Double = 0.0
 
+    @SerializedName("RepaymentStartDate")
+    var repaymentStartDate: String = ""
 
     private val PARSER_NAME = "Name"
     private val PARSER_BALANCE = "Balance"
     private val PARSER_INTEREST = "Interest"
-    private val PARSER_PAYMENT = "Payment"
+    private val PARSER_PAYMENT = "BasePayment"
+    private val PARSER_EXTRA_PAYMENT = "ExtraPayment"
     private val PARSER_PROVIDER = "Provider"
-    private val PARSER_REPAYMENT_START_DATE = "ReplaymentStartDate"
+    private val PARSER_REPAYMENT_START_DATE = "RepaymentStartDate"
 
     fun parse(response: JSONObject): Loan {
         if (response.has(PARSER_NAME)) name = response.getString(PARSER_NAME)
         if (response.has(PARSER_BALANCE)) balance = response.getDouble(PARSER_BALANCE)
         if (response.has(PARSER_INTEREST)) interest = response.getDouble(PARSER_INTEREST)
         if (response.has(PARSER_PAYMENT)) payment = response.getDouble(PARSER_PAYMENT)
+        if (response.has(PARSER_PAYMENT)) extraPayment = response.getDouble(PARSER_EXTRA_PAYMENT)
         if (response.has(PARSER_PROVIDER)) provider = response.getString(PARSER_PROVIDER)
-        if (response.has(PARSER_REPAYMENT_START_DATE)) repaymentStartDate = response.getLong(PARSER_REPAYMENT_START_DATE)
+        if (response.has(PARSER_REPAYMENT_START_DATE)) repaymentStartDate = response.getString(PARSER_REPAYMENT_START_DATE)
 
-        return this;
+        return this
     }
 
     override fun toString(): String {

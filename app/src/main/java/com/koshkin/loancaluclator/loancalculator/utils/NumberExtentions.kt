@@ -4,6 +4,8 @@ import java.text.DecimalFormat
 
 /**
  * Created by koshkin on 7/4/16.
+ *
+ * Extensions
  */
 
 var amountDisplayFormatter = DecimalFormat("#,###,###,##0.00")

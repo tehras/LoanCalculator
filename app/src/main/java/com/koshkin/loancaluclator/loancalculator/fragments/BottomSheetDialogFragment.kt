@@ -5,13 +5,18 @@ import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.BottomSheetDialogFragment
+import android.util.Log
 import android.view.View
 import java.io.Serializable
 
 /**
  * Created by koshkin on 7/4/16.
+ *
+ * Bottom Sheet Layout
  */
 class BottomSheetDialogFragment : BottomSheetDialogFragment() {
+
+    val TAG = "BottomSheetDialogFragment"
 
     var childView: Int = 0
     var bottomSheetCallback: BottomSheetViewCallback? = null
@@ -42,8 +47,10 @@ class BottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         dialog.setContentView(view)
         val behavior = BottomSheetBehavior.from(view.parent as View)
+
         view.post {
             behavior.peekHeight = view.measuredHeight
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
         return dialog
