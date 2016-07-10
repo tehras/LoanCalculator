@@ -1,66 +1,35 @@
 {
   "project_info": {
-    "project_number": "112869145235",
-    "firebase_url": "https://arduima-loanapp.firebaseio.com",
-    "project_id": "arduima-loanapp",
-    "storage_bucket": "arduima-loanapp.appspot.com"
+    "project_number": "686710201386",
+    "firebase_url": "https://koshkin-loanapp-625e8.firebaseio.com",
+    "project_id": "koshkin-loanapp-625e8",
+    "storage_bucket": "koshkin-loanapp-625e8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:112869145235:android:81a900d2b9df3d85",
-        "android_client_info": {
-          "package_name": "com.koshkin.loancalculator"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "112869145235-krm52qb7cpssl0vg3msij595mnnh5r5d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCESpdc_tTDmh9akSOWTgS8AR9A2I47rmM"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:112869145235:android:cf4b5fe37b673870",
+        "mobilesdk_app_id": "1:686710201386:android:cf4b5fe37b673870",
         "android_client_info": {
           "package_name": "com.koshkin.loancaluclator.loancalculator"
         }
       },
       "oauth_client": [
         {
-          "client_id": "112869145235-4t3jr56imvrhc5m45dp4qaqj00if6k5a.apps.googleusercontent.com",
+          "client_id": "686710201386-5kd82h9v4nsu4s37e42q394c654q34j9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.koshkin.loancaluclator.loancalculator",
-            "certificate_hash": "786CBDC865D2C3649745052A9DF0747E5ECAD92F"
+            "certificate_hash": "7C6CEDFEEB8B128D1D0ED99F076DAA12CB8AD644"
           }
         },
         {
-          "client_id": "112869145235-krm52qb7cpssl0vg3msij595mnnh5r5d.apps.googleusercontent.com",
+          "client_id": "686710201386-7u8f878pn222gp94ilvru3t48c6eru77.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCESpdc_tTDmh9akSOWTgS8AR9A2I47rmM"
+          "current_key": "AIzaSyAHI2bT199SiDDIkUO93I4vp_eYU9Ddp0s"
         }
       ],
       "services": {

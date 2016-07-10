@@ -25,4 +25,8 @@ class Payment {
     fun getFormattedDate(): Long {
         return dateFormatter.parse(paymentDate).time
     }
+
+    override fun toString(): String {
+        return "Payment(balance=$balance, payment=$payment, interest=$interest, principal=$principal, paymentDate='$paymentDate', dateFormatter=$dateFormatter)"
+    }
 }

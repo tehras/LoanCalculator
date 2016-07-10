@@ -22,4 +22,8 @@ class PaymentsList : ParsingObject {
 
         aggregatedPaymentList = Gson().fromJson(response, this.javaClass).aggregatedPaymentList
     }
+
+    override fun toString(): String {
+        return "PaymentsList(aggregatedPaymentList=$aggregatedPaymentList, status=$status)"
+    }
 }

@@ -66,9 +66,9 @@ abstract class LandingScreenAdapter(var loans: Loans, var paymentsList: Payments
     }
 
     val VIEW_TYPE_CHART: Int = 0
-    val VIEW_TYPE_LOAN: Int = 1
-    val VIEW_TYPE_LOADING: Int = 2
-    val VIEW_TYPE_ERROR: Int = 3
+    val VIEW_TYPE_LOAN: Int = 11
+    val VIEW_TYPE_LOADING: Int = 1
+    val VIEW_TYPE_ERROR: Int = 2
 
     override fun getItemCount(): Int {
         if (loans.status == LoadingStatus.LOADING)

@@ -1,6 +1,8 @@
 package com.koshkin.loancaluclator.loancalculator.utils
 
+import android.content.res.Configuration
 import android.graphics.Rect
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -16,7 +18,26 @@ fun RecyclerView.defaultRecyclerView() {
     this.setHasFixedSize(true)
 
     // use a linear layout manager
-    this.layoutManager = LinearLayoutManager(this.context)
+    this.layoutManager = this.defaultLayoutManager()
+}
+
+fun RecyclerView.defaultLayoutManager(): RecyclerView.LayoutManager {
+    if (this.context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+        return LinearLayoutManager(this.context)
+    else {
+        val gridLayoutManager = GridLayoutManager(this.context, 2)
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val type = this@defaultLayoutManager.adapter.getItemViewType(position)
+                if (type < 10)
+                    return 2
+                else
+                    return 1
+            }
+        }
+
+        return gridLayoutManager
+    }
 }
 
 fun RecyclerView.setExtraBottomPadding(bottom: Int) {

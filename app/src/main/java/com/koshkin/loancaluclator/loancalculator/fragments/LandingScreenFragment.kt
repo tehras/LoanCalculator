@@ -28,17 +28,29 @@ import java.util.*
  * Landing Screen Fragment
  */
 class LandingScreenFragment : BaseFragment(), NetworkResponse {
+    companion object Factory {
+        /**
+         * Return new instance of the fragment
+         */
+        fun create(): LandingScreenFragment = LandingScreenFragment()
+    }
+
     override fun onResponse(response: Response, request: Request) {
         Log.d(javaClass.simpleName, "loans response - " + response.parsingObject.toString())
         if (response.parsingObject is Loans) {
             if (response.status == Response.ResponseStatus.FAILURE)
                 (response.parsingObject as Loans).status = LoadingStatus.FAILURE
             adapter.notifyLoansUpdated()
+            callsToExecute--
         } else if (response.parsingObject is PaymentsList) {
             if (response.status == Response.ResponseStatus.FAILURE)
                 (response.parsingObject as PaymentsList).status = LoadingStatus.FAILURE
             adapter.notifyChartUpdated()
+            callsToExecute--
         }
+
+        if (callsToExecute <= 0)
+            hideProgressDialog()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -53,14 +65,23 @@ class LandingScreenFragment : BaseFragment(), NetworkResponse {
         if (paymentList.status != LoadingStatus.SUCCESS)
             executePaymentsList()
 
+        if (callsToExecute > 0)
+            showProgressDialog(loadingText)
+
         return v
     }
 
+    val loadingText = "Loading data, please wait"
+
+    var callsToExecute = 0
+
     private fun executePaymentsList() {
+        callsToExecute++
         Runner().paymentsRequest(paymentList, this)
     }
 
     private fun executeLoansCall() {
+        callsToExecute++
         Runner().landingRequest(loans, this)
     }
 

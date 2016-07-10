@@ -11,6 +11,8 @@ import okhttp3.RequestBody
  *
  * Runner
  */
+var userToken: String ? = null;
+
 class Runner : AsyncTask<Request, Void, Response>() {
 
     var defaultMediaType = MediaType.parse("application/json; charset=utf-8")
@@ -29,10 +31,10 @@ class Runner : AsyncTask<Request, Void, Response>() {
 
         try {
             when (req.requestType) {
-                Request.Type.GET -> response.httpGet(req)
-                Request.Type.POST -> response.httpPost(req)
-                Request.Type.DELETE -> response.httpDelete(req)
-                Request.Type.PUT -> response.httpPut(req)
+                Request.Type.GET -> response.httpRequest(req) { get() }
+                Request.Type.POST -> response.httpRequest(req) { post(RequestBody.create(defaultMediaType, req.requestData)) }
+                Request.Type.DELETE -> response.httpRequest(req) { delete() }
+                Request.Type.PUT -> response.httpRequest(req) { put(RequestBody.create(defaultMediaType, req.requestData)) }
             }
         } catch (e: Exception) {
             Log.v(this.javaClass.simpleName, "Exception", e)
@@ -42,37 +44,12 @@ class Runner : AsyncTask<Request, Void, Response>() {
         return response
     }
 
-    private fun Response.httpPut(request: Request) {
+    private fun Response.httpRequest(request: Request, func: okhttp3.Request.Builder.() -> okhttp3.Request.Builder) {
         val client = getClient()
 
-        val builder = defaultBuilder(request)!!.put(RequestBody.create(defaultMediaType, request.requestData))
-        val okResponse = client.newCall(builder.build()).execute()
+        Log.d(TAG, "Request url - ${request.url}")
 
-        parseResponse(this, okResponse)
-    }
-
-    private fun Response.httpPost(request: Request) {
-        val client = getClient()
-
-        val builder = defaultBuilder(request)!!.post(RequestBody.create(defaultMediaType, request.requestData))
-        val okResponse = client.newCall(builder.build()).execute()
-
-        parseResponse(this, okResponse)
-    }
-
-    private fun Response.httpDelete(request: Request) {
-        val client = getClient()
-
-        val builder = defaultBuilder(request)!!.delete()
-        val okResponse = client.newCall(builder.build()).execute()
-
-        parseResponse(this, okResponse)
-    }
-
-    private fun Response.httpGet(request: Request) {
-        val client = getClient()
-
-        val builder = defaultBuilder(request)!!.get()
+        val builder = defaultBuilder(request)!!.func()
         val okResponse = client.newCall(builder.build()).execute()
 
         parseResponse(this, okResponse)
@@ -82,13 +59,18 @@ class Runner : AsyncTask<Request, Void, Response>() {
         if (okResponse.isSuccessful) response.status = Response.ResponseStatus.SUCCESS
         else response.status = Response.ResponseStatus.FAILURE
 
+        Log.d(TAG, "Response STATUS - " + response.status)
+
         if (response.status == Response.ResponseStatus.SUCCESS)
             response.parsingObject.parse(okResponse.body().string())
-
     }
 
+    val AuthorizationHeader = "Authorization"
+    val TAG = "Runner"
+
     private fun defaultBuilder(request: Request): okhttp3.Request.Builder? {
-        return okhttp3.Request.Builder()
+        Log.d(TAG, "userToken $userToken")
+        return okhttp3.Request.Builder().addHeader(AuthorizationHeader, userToken)
                 .url(request.url)
     }
 
