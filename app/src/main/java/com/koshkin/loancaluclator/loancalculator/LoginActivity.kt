@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -14,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -92,13 +90,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     fun sendBackSuccessUser() {
         val auth = FirebaseAuth.getInstance()
 
-        startLoggedInActivity(auth.currentUser){hideProgressDialog()}
+        startLoggedInActivity(auth.currentUser) { hideProgressDialog() }
     }
 
     /**
      * Send back failed
      */
-    fun sendBackFailedUse() {
+    fun sendBackFailedUse(error: String) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+
         setResult(Activity.RESULT_CANCELED, Intent())
     }
 
@@ -117,7 +117,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
             } else {
                 // Google Sign In failed, update UI appropriately
                 // [START_EXCLUDE]
-                sendBackFailedUse()
+                sendBackFailedUse("Error authenticating, please try at a later time")
                 // [END_EXCLUDE]
             }
         }
@@ -129,7 +129,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         if (auth == null)
             return
 
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId())
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id)
         // [START_EXCLUDE silent]
         showProgressDialog()
         // [END_EXCLUDE]
