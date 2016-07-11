@@ -25,6 +25,10 @@ open class BaseFragment : Fragment() {
         BottomSheetDialogFragment().addView(view, callback).show(activity.supportFragmentManager, "bottom_sheet_dialog")
     }
 
+    fun startFragment(a: AppCompatActivity) {
+        startFragment(a, false)
+    }
+
     fun startFragment(a: AppCompatActivity, first: Boolean) {
         val tran = a.supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.fragment_in_animation, anim.fragment_out_animation)
@@ -58,12 +62,18 @@ open class BaseFragment : Fragment() {
         }
     }
 
-    fun Activity.showFab(fabId: Int, func: () -> View.OnClickListener) {
+    fun Activity.showFab(fabId: Int, b: Boolean, func: () -> View.OnClickListener) {
         if (this is HomeActivity && this.fab != null) {
             this.fab!!.setImageDrawable(this.resources.getDrawable(fabId, null))
             this.fab!!.show()
             this.fab!!.setOnClickListener(func())
+
+            this.hideFab = b
         }
+    }
+
+    fun Activity.showFab(fabId: Int, func: () -> View.OnClickListener) {
+        showFab(fabId, true, func)
     }
 
     fun Activity.hideFab() {

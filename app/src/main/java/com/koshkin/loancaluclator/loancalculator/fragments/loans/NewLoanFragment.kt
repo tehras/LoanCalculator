@@ -1,4 +1,4 @@
-package com.koshkin.loancaluclator.loancalculator.fragments
+package com.koshkin.loancaluclator.loancalculator.fragments.loans
 
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
@@ -23,7 +23,7 @@ class NewLoanFragment : BaseFragment(), NetworkResponse {
     override fun onResume() {
         super.onResume()
 
-        activity.showFab(R.drawable.ic_accept_drawable_white) { View.OnClickListener { validateAndSendLoan() } }
+        activity.showFab(R.drawable.ic_accept_drawable_white, false) { View.OnClickListener { validateAndSendLoan() } }
     }
 
     companion object Factory {
@@ -53,8 +53,6 @@ class NewLoanFragment : BaseFragment(), NetworkResponse {
         loanInterest = view.findViewById(R.id.new_loan_interest_field) as TextInputEditText
         loanExtraRepayment = view.findViewById(R.id.new_loan_extra_repayment_field) as TextInputEditText
         loanRepaymentStartDate = view.findViewById(R.id.new_loan_repayment_start_date_field) as TextInputEditText
-
-//        (view.findViewById(R.id.new_loan_accept_button) as FloatingActionButton).setOnClickListener { validateAndSendLoan() }
 
         return view
     }

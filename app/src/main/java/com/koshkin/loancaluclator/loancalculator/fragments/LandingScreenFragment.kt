@@ -13,6 +13,8 @@ import com.koshkin.loancaluclator.loancalculator.R
 import com.koshkin.loancaluclator.loancalculator.adapters.LandingScreenAdapter
 import com.koshkin.loancaluclator.loancalculator.dataholders.loans
 import com.koshkin.loancaluclator.loancalculator.dataholders.paymentList
+import com.koshkin.loancaluclator.loancalculator.fragments.loans.EditLoanFragment
+import com.koshkin.loancaluclator.loancalculator.fragments.loans.SimpleNewLoanFragment
 import com.koshkin.loancaluclator.loancalculator.models.loans.Loan
 import com.koshkin.loancaluclator.loancalculator.models.loans.Loans
 import com.koshkin.loancaluclator.loancalculator.models.payments.PaymentsList
@@ -39,7 +41,7 @@ class LandingScreenFragment : BaseFragment(), NetworkResponse {
     override fun onResume() {
         super.onResume()
 
-        activity.showFab(R.drawable.ic_add_white) { View.OnClickListener { NewLoanFragment.create().startFragment(activity as AppCompatActivity, false) } }
+        activity.showFab(R.drawable.ic_add_white) { View.OnClickListener { SimpleNewLoanFragment.create().startFragment(activity as AppCompatActivity, false) } }
     }
 
     override fun onResponse(response: Response, request: Request) {
@@ -110,12 +112,17 @@ class LandingScreenFragment : BaseFragment(), NetworkResponse {
                         (view.findViewById(R.id.landing_bottom_sheet_name) as TextView).text = loan.name
                         (view.findViewById(R.id.landing_bottom_sheet_payments) as TextView).text = loan.payment.numberDisplay()
                         (view.findViewById(R.id.landing_bottom_sheet_as_of_date) as TextView).text = loan.repaymentStartDate.asOfDate(inputDateFormat, outputDateFormat)
+                        view.findViewById(R.id.landing_bottom_sheet_edit_button).setOnClickListener { startEditFragment(loan.key) }
                     }
                 })
             }
 
         }
         recyclerView.adapter = adapter
+    }
+
+    private fun startEditFragment(loanKey: String) {
+        EditLoanFragment.create(loanKey).startFragment(activity as AppCompatActivity)
     }
 
 }

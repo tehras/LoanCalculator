@@ -59,7 +59,10 @@ class LandingChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: In
         this.extraTopOffset = 10.toFloat()
     }
 
-    fun updateData(payments: ArrayList<Payment>) {
+    fun updateData(payments: ArrayList<Payment>?) {
+        if (payments == null)
+            return
+
         val data: LineData = LineData()
 
         val vals: ArrayList<Entry> = ArrayList()

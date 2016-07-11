@@ -10,6 +10,11 @@ import java.io.Serializable
  * Loan
  */
 class Loan : Serializable {
+    constructor(key: String) {
+        this@Loan.key = key
+    }
+
+    lateinit var key: String
 
     @SerializedName("Name")
     lateinit var name: String

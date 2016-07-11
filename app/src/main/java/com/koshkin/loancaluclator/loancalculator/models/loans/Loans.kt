@@ -29,10 +29,14 @@ class Loans : ParsingObject {
     fun JSONObject.parse(key: String) {
         status = LoadingStatus.SUCCESS
 
-        loans.put(key, Loan().parse(this))
+        loans.put(key, Loan(key).parse(this))
     }
 
     override fun toString(): String {
         return "Loans(loans=$loans, status=$status)"
+    }
+
+    fun getLoan(key: String): Loan? {
+        return loans.get(key)
     }
 }

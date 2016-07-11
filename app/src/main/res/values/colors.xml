@@ -4,7 +4,7 @@
     <color name="colorPrimaryTransparent">#993F51B5</color>
     <color name="colorPrimaryDarkTransparent">#99303F9F</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ffeb3b</color>
+    <color name="colorAccent">#FFC107</color>
 
     <color name="landing_line_color">#FFFFFF</color>
 </resources>

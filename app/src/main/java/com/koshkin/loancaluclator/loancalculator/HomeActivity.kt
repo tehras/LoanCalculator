@@ -17,6 +17,7 @@ class HomeActivity : BaseActivity() {
 
     private var appBar: AppBarLayout? = null
     var fab: FloatingActionButton? = null
+    var hideFab: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +62,7 @@ class HomeActivity : BaseActivity() {
                 hideToolBarShadow()
             }
 
-            if (fab != null && scrollY > 10) {
+            if (hideFab && fab != null && scrollY > 10) {
                 if (scrollY == 0 || oldScrollY > (scrollY)) {
                     fab!!.show()
                 } else {

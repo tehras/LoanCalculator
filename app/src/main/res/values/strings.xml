@@ -28,4 +28,7 @@
     <string name="landing_error">Error loading results</string>
 
     <string name="accessibility_edit_button">Edit Loan Button</string>
+    <string name="loan_name_help_content">Firstly, please provide the name of the loan. This will help you identify what loan you are looking at.\n(Minimum 3 Characters)</string>
+    <string name="loan_provider_helper_text">Next, who is the provider of your loan?\n(Minimum 3 Characters)</string>
+    <string name="view_loan_title_information">Let\'s start with some basic information…</string>
 </resources>
