@@ -3,6 +3,7 @@ package com.koshkin.loancaluclator.loancalculator
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +41,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.d(TAG, "onCreate is called")
+
         setContentView(R.layout.activity_login)
 
         (findViewById(R.id.login_google_button) as View).setOnClickListener(this)
@@ -52,6 +57,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         // [START initialize_auth]
         auth = FirebaseAuth.getInstance()
         // [END initialize_auth]
+
+        Log.d(TAG, "auth $auth")
 
         // [START auth_state_listener]
         authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -88,6 +95,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
      */
     @SuppressWarnings("unused")
     fun sendBackSuccessUser() {
+        Log.d(TAG, "sendBackSuccessUser")
         val auth = FirebaseAuth.getInstance()
 
         startLoggedInActivity(auth.currentUser) { hideProgressDialog() }
@@ -167,8 +175,33 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     // [START signin]
     private fun signIn() {
-        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        Log.d(TAG, "sign in")
+        val silentSignIn = Auth.GoogleSignInApi.silentSignIn(googleApiClient)
+
+        object : AsyncTask<Void, Void, GoogleSignInResult>() {
+            override fun doInBackground(vararg p0: Void?): GoogleSignInResult {
+                return silentSignIn.await()
+            }
+
+            override fun onPostExecute(result: GoogleSignInResult?) {
+                if (result!!.isSuccess) {
+                    // Google Sign In was successful, authenticate with Firebase
+                    val account = result.signInAccount
+                    if (account != null)
+                        firebaseAuthWithGoogle(account)
+                } else {
+                    // Google Sign In failed, update UI appropriately
+                    // [START_EXCLUDE]
+                    sendBackFailedUse("Error authenticating, please try at a later time")
+                    // [END_EXCLUDE]
+                }
+            }
+        }.execute()
+
+
+//        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+//        startActivity(signInIntent)
+//        startActivityForResult(signInIntent, RC_SIGN_IN)
     }
     // [END signin]
 

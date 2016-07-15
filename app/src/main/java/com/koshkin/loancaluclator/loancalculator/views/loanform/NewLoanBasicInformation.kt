@@ -6,11 +6,11 @@ import android.support.design.widget.TextInputEditText
 import android.text.Editable
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.AccelerateInterpolator
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.koshkin.loancaluclator.loancalculator.R
 import com.koshkin.loancaluclator.loancalculator.utils.TextWatcherOnlyAfter
+import com.koshkin.loancaluclator.loancalculator.utils.defaultAnimate
+import com.koshkin.loancaluclator.loancalculator.utils.hideKeyboard
 import com.koshkin.loancaluclator.loancalculator.views.AppCompatEditTextFullLayout
 
 /**
@@ -29,7 +29,11 @@ class NewLoanBasicInformation(context: Context, attributeSet: AttributeSet?, sty
     lateinit var loanProvider: AppCompatEditTextFullLayout
     lateinit var nextImage: FloatingActionButton
 
+    var callback: NewLoanCallback? = null
+
     init {
+        isSaveEnabled = true
+
         inflate(context, R.layout.view_loan_basic_information, this)
 
         loanName = findViewById(R.id.view_loan_information_name) as AppCompatEditTextFullLayout
@@ -38,14 +42,17 @@ class NewLoanBasicInformation(context: Context, attributeSet: AttributeSet?, sty
         nextImage = findViewById(R.id.view_loan_next) as FloatingActionButton
         nextImage.visibility = View.GONE
         nextImage.setOnClickListener { goToNext() }
+
+        loanName.editText.isFocusable = true
+        loanProvider.editText.isFocusable = true
+
+        this.setOnClickListener { hideKeyboard() }
     }
 
     private var enableNext: Boolean = false
 
     fun goToNext() {
-        animate().setDuration(200).translationX(-measuredWidth.toFloat()).setInterpolator(AccelerateInterpolator()).start()
-
-        Toast.makeText(context, "Next", Toast.LENGTH_LONG).show()
+        animate().defaultAnimate(-measuredWidth) { if (callback != null) callback!!.next() }
     }
 
     @Suppress("unused")
@@ -54,7 +61,7 @@ class NewLoanBasicInformation(context: Context, attributeSet: AttributeSet?, sty
         loanProvider.editText.watchText(func)
     }
 
-    private fun TextInputEditText.watchText(func: (AppCompatEditTextFullLayout, AppCompatEditTextFullLayout) -> Boolean) {
+    fun TextInputEditText.watchText(func: (AppCompatEditTextFullLayout, AppCompatEditTextFullLayout) -> Boolean) {
         this.addTextChangedListener(object : TextWatcherOnlyAfter() {
             override fun afterTextChanged(p0: Editable?) {
                 if (func(loanName, loanProvider)) showNext()
@@ -72,5 +79,4 @@ class NewLoanBasicInformation(context: Context, attributeSet: AttributeSet?, sty
         nextImage.hide()
         enableNext = false
     }
-
 }

@@ -81,5 +81,17 @@ open class BaseFragment : Fragment() {
             this.fab!!.hide()
         }
     }
+
+    fun Activity.hideToolbar() {
+        if (this is HomeActivity) {
+            this.hideToolbar()
+        }
+    }
+
+    fun Activity.showToolbar() {
+        if (this is HomeActivity) {
+            this.showToolbar()
+        }
+    }
 }
 

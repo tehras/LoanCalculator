@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <com.koshkin.loancaluclator.loancalculator.views.loanform.NewLoanBasicInformation
@@ -10,4 +11,25 @@
         android:layout_height="wrap_content"
         android:focusable="true" />
 
-</LinearLayout>
+    <com.koshkin.loancaluclator.loancalculator.views.loanform.NewLoanBalanceInformation
+        android:id="@+id/new_loan_balance_information_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:visibility="gone" />
+
+    <com.koshkin.loancaluclator.loancalculator.views.loanform.NewLoanPaymentInformation
+        android:id="@+id/new_loan_payment_information_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:visibility="gone"/>
+
+    <com.koshkin.loancaluclator.loancalculator.views.loanform.NewLoanFinalInformation
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:focusable="true"
+        android:id="@+id/new_loan_final_information_view"
+        android:layout_height="wrap_content"/>
+
+</FrameLayout>

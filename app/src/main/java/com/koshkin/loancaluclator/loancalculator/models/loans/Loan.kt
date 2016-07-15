@@ -1,6 +1,8 @@
 package com.koshkin.loancaluclator.loancalculator.models.loans
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.koshkin.loancaluclator.loancalculator.networking.ParsingObject
 import org.json.JSONObject
 import java.io.Serializable
 
@@ -9,18 +11,28 @@ import java.io.Serializable
  *
  * Loan
  */
-class Loan : Serializable {
+class Loan : Serializable, ParsingObject {
+    override fun parse(response: String) {
+
+    }
+
+    fun getRequestObject(): String {
+        return Gson().toJson(this)
+    }
+
     constructor(key: String) {
         this@Loan.key = key
     }
 
+    constructor()
+
     lateinit var key: String
 
     @SerializedName("Name")
-    lateinit var name: String
+    var name: String = ""
 
     @SerializedName("Provider")
-    lateinit var provider: String
+    var provider: String = ""
 
     @SerializedName("Balance")
     var balance: Double = 0.0

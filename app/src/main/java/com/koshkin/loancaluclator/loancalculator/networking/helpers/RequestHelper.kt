@@ -1,7 +1,7 @@
 package com.koshkin.loancaluclator.loancalculator.networking.helpers
 
+import com.koshkin.loancaluclator.loancalculator.models.loans.Loan
 import com.koshkin.loancaluclator.loancalculator.models.loans.Loans
-import com.koshkin.loancaluclator.loancalculator.models.payments.NewLoan
 import com.koshkin.loancaluclator.loancalculator.models.payments.PaymentsList
 import com.koshkin.loancaluclator.loancalculator.networking.*
 
@@ -22,7 +22,7 @@ fun Runner.paymentsRequest(paymentsList: PaymentsList, callbackObj: NetworkRespo
     this.execute(request)
 }
 
-fun Runner.createLoanRequest(loan: NewLoan, callbackObj: NetworkResponse) {
+fun Runner.createLoanRequest(loan: Loan, callbackObj: NetworkResponse) {
     val request = Request(Request.Type.PUT, baseUrl + extLoans, loan, callbackObj)
     request.requestData = loan.getRequestObject()
 

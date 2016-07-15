@@ -6,6 +6,10 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.View
+import android.view.animation.AnimationUtils
+import com.koshkin.loancaluclator.loancalculator.R.anim.abc_slide_in_top
+import com.koshkin.loancaluclator.loancalculator.R.anim.abc_slide_out_top
 import com.koshkin.loancaluclator.loancalculator.R.dimen
 import com.koshkin.loancaluclator.loancalculator.R.id
 import com.koshkin.loancaluclator.loancalculator.fragments.LandingScreenFragment
@@ -78,5 +82,19 @@ class HomeActivity : BaseActivity() {
 
     private fun hideToolBarShadow() {
         appBar!!.elevation = 0.toFloat()
+    }
+
+    fun hideToolbar() {
+        if (appBar != null && appBar!!.visibility != View.GONE) {
+            appBar!!.visibility = View.GONE
+            appBar!!.startAnimation(AnimationUtils.loadAnimation(this, abc_slide_out_top))
+        }
+    }
+
+    fun showToolbar() {
+        if (appBar != null && appBar!!.visibility != View.VISIBLE) {
+            appBar!!.visibility = View.VISIBLE
+            appBar!!.startAnimation(AnimationUtils.loadAnimation(this, abc_slide_in_top))
+        }
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppCompatEditTextFullLayout">
+        <attr name="android:inputType" />
+        <attr name="lines" format="integer" />
+    </declare-styleable>
+</resources>
