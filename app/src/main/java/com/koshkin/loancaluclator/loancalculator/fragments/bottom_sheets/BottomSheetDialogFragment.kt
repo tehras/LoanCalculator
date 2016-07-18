@@ -1,11 +1,10 @@
-package com.koshkin.loancaluclator.loancalculator.fragments
+package com.koshkin.loancaluclator.loancalculator.fragments.bottom_sheets
 
 import android.app.Dialog
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.BottomSheetDialogFragment
-import android.util.Log
 import android.view.View
 import java.io.Serializable
 
@@ -21,7 +20,7 @@ class BottomSheetDialogFragment : BottomSheetDialogFragment() {
     var childView: Int = 0
     var bottomSheetCallback: BottomSheetViewCallback? = null
 
-    fun addView(view: Int, bottomSheetCallback: BottomSheetViewCallback): com.koshkin.loancaluclator.loancalculator.fragments.BottomSheetDialogFragment {
+    fun addView(view: Int, bottomSheetCallback: BottomSheetViewCallback): com.koshkin.loancaluclator.loancalculator.fragments.bottom_sheets.BottomSheetDialogFragment {
         this.childView = view
         this.bottomSheetCallback = bottomSheetCallback
 
@@ -43,7 +42,7 @@ class BottomSheetDialogFragment : BottomSheetDialogFragment() {
         val view = View.inflate(context, childView, null)
 
         if (bottomSheetCallback != null)
-            (bottomSheetCallback as BottomSheetViewCallback).manageView(view)
+            (bottomSheetCallback as BottomSheetViewCallback).manageView(view, this)
 
         dialog.setContentView(view)
         val behavior = BottomSheetBehavior.from(view.parent as View)
@@ -67,6 +66,6 @@ class BottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     interface BottomSheetViewCallback : Serializable {
-        fun manageView(view: View)
+        fun manageView(view: View, bottomSheet: com.koshkin.loancaluclator.loancalculator.fragments.bottom_sheets.BottomSheetDialogFragment)
     }
 }

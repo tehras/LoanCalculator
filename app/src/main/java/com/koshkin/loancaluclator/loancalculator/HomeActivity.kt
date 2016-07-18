@@ -8,12 +8,14 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.crashlytics.android.Crashlytics
 import com.koshkin.loancaluclator.loancalculator.R.anim.abc_slide_in_top
 import com.koshkin.loancaluclator.loancalculator.R.anim.abc_slide_out_top
 import com.koshkin.loancaluclator.loancalculator.R.dimen
 import com.koshkin.loancaluclator.loancalculator.R.id
-import com.koshkin.loancaluclator.loancalculator.fragments.LandingScreenFragment
+import com.koshkin.loancaluclator.loancalculator.fragments.landing.LandingScreenFragment
 import com.koshkin.loancaluclator.loancalculator.networking.userToken
+import io.fabric.sdk.android.Fabric
 
 class HomeActivity : BaseActivity() {
 
@@ -26,6 +28,7 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Fabric.with(this, Crashlytics())
         if (intent != null) {
             val token = intent.getStringExtra(TOKEN_KEY)
 
@@ -42,6 +45,7 @@ class HomeActivity : BaseActivity() {
         hideToolBarShadow()
 
         fab = findViewById(R.id.floating_action_button) as FloatingActionButton?
+        fab!!.visibility = View.GONE
 
         if (savedInstanceState == null) {
             //start default

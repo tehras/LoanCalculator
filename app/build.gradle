@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'io.fabric'
 apply from: "../common.gradle"
 
 android {
@@ -9,8 +10,8 @@ android {
         applicationId "com.koshkin.loancaluclator.loancalculator"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 100102
-        versionName "1.0.2"
+        versionCode 100104
+        versionName "1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,12 +25,20 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
+        transitive = true;
+    }
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -56,9 +65,6 @@ dependencies {
     // Google Sign In SDK (only required for Google Sign In)
     compile "com.google.android.gms:play-services-auth:${project.ext.firebase_version}"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
-}
-repositories {
-    mavenCentral()
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -27,4 +27,5 @@ class Request {
 
 val baseUrl: String = "http://loans-staging.koshkinbros.com/"
 val extLoans: String = "loans"
+val extLoan: String = "loans/{loan-id}"
 val extPayments: String = "payments"

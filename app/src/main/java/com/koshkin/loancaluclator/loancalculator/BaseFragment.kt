@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.koshkin.loancaluclator.loancalculator.R.anim
-import com.koshkin.loancaluclator.loancalculator.fragments.BottomSheetDialogFragment
+import com.koshkin.loancaluclator.loancalculator.fragments.bottom_sheets.BottomSheetDialogFragment
 
 /**
  * Created by koshkin on 7/4/16.

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.koshkin.loancaluclator.loancalculator.BaseFragment
 import com.koshkin.loancaluclator.loancalculator.R
+import com.koshkin.loancaluclator.loancalculator.fragments.dialogs.SimpleErrorDialog
 import com.koshkin.loancaluclator.loancalculator.models.loans.Loan
 import com.koshkin.loancaluclator.loancalculator.networking.NetworkResponse
 import com.koshkin.loancaluclator.loancalculator.networking.Request
@@ -27,6 +28,12 @@ import java.util.*
 class SimpleNewLoanFragment : BaseFragment(), NetworkResponse {
     override fun onResponse(response: Response, request: Request) {
         Log.d(TAG, "response $response")
+        if (response.status == Response.ResponseStatus.SUCCESS) {
+            hideProgressDialog()
+            activity.onBackPressed()
+        } else {
+            SimpleErrorDialog.create(activity.resources.getString(R.string.error_message_new_loan)).show(activity.supportFragmentManager, "error_dialog")
+        }
     }
 
     companion object Factory {
@@ -39,16 +46,13 @@ class SimpleNewLoanFragment : BaseFragment(), NetworkResponse {
         retainInstance = true
         if (loan == null)
             loan = Loan()
+
+        Log.d(TAG, "onCreate arguments - $arguments")
     }
 
     var loan: Loan? = null
 
     override fun onPause() {
-        if (basicInformation!!.visibility == View.VISIBLE)
-            state = STATE_BASIC
-        else if (balanceInformation!!.visibility == View.VISIBLE)
-            state = STATE_BALANCE
-
         activity.showToolbar()
 
         super.onPause()
@@ -59,23 +63,6 @@ class SimpleNewLoanFragment : BaseFragment(), NetworkResponse {
 
         activity.hideToolbar()
         activity.hideFab()
-
-        basicInformation!!.visibility = View.GONE
-        balanceInformation!!.visibility = View.GONE
-
-        when (state) {
-            STATE_BASIC -> {
-                basicInformation!!.visibility = View.VISIBLE
-                basicInformation!!.loanName.editText.setText(loan!!.name)
-                basicInformation!!.loanProvider.editText.setText(loan!!.provider)
-            }
-            STATE_BALANCE -> {
-                balanceInformation!!.visibility = View.VISIBLE
-                balanceInformation!!.loanBalance.editText.setText(loan!!.balance.toString())
-                balanceInformation!!.loanInterest.editText.setText(loan!!.interest.toString())
-
-            }
-        }
     }
 
     var basicInformation: NewLoanBasicInformation? = null
@@ -83,10 +70,10 @@ class SimpleNewLoanFragment : BaseFragment(), NetworkResponse {
     var repaymentInformation: NewLoanPaymentInformation? = null
     var finalInformation: NewLoanFinalInformation? = null
 
-    private var state: Int = 0
-
     private val STATE_BASIC: Int = 0
     private val STATE_BALANCE: Int = 1
+    private val STATE_REPAYMENT: Int = 2
+    private val STATE_FINAL: Int = 3
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.fragment_simple_new_loan, container, false)
@@ -131,7 +118,14 @@ class SimpleNewLoanFragment : BaseFragment(), NetworkResponse {
 
         addCallbacks(basicInformation!!, balanceInformation!!, repaymentInformation!!, finalInformation!!)
 
+
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        checkForSavedState(savedInstanceState)
     }
 
     val outputDateFormat = SimpleDateFormat("yyyyMMdd", Locale.US)
@@ -221,5 +215,68 @@ class SimpleNewLoanFragment : BaseFragment(), NetworkResponse {
             return 0.toDouble()
 
         return this.toDouble()
+    }
+
+    private val BUNDLE_KEY_LOAN_NAME = "loan_name_key"
+    private val BUNDLE_KEY_LOAN_PROVIDER = "loan_provider"
+    private val BUNDLE_KEY_LOAN_BALANCE = "loan_balance"
+    private val BUNDLE_KEY_LOAN_INTEREST = "loan_interest"
+    private val BUNDLE_KEY_LOAN_BASE_PAYMENT = "loan_base_payment"
+    private val BUNDLE_KEY_LOAN_EXTRA_PAYMENT = "loan_extra_payment"
+    private val BUNDLE_KEY_LOAN_CARD_SHOWING = "loan_card_showing"
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        Log.d(TAG, "onSaveInstanceState")
+        //save all the fields
+        outState!!.putString(BUNDLE_KEY_LOAN_NAME, basicInformation!!.loanName.editText.text.toString())
+        outState.putString(BUNDLE_KEY_LOAN_PROVIDER, basicInformation!!.loanProvider.editText.text.toString())
+        outState.putString(BUNDLE_KEY_LOAN_BALANCE, balanceInformation!!.loanBalance.editText.text.toString())
+        outState.putString(BUNDLE_KEY_LOAN_INTEREST, balanceInformation!!.loanInterest.editText.text.toString())
+        outState.putString(BUNDLE_KEY_LOAN_BASE_PAYMENT, repaymentInformation!!.loanBasePayment.editText.text.toString())
+        outState.putString(BUNDLE_KEY_LOAN_EXTRA_PAYMENT, repaymentInformation!!.loanExtraPayment.editText.text.toString())
+        outState.putInt(BUNDLE_KEY_LOAN_CARD_SHOWING, getCurrentCard())
+    }
+
+    private fun getCurrentCard(): Int {
+        if (basicInformation!!.visibility == View.VISIBLE) return STATE_BASIC
+        else if (balanceInformation!!.visibility == View.VISIBLE) return STATE_BALANCE
+        else if (repaymentInformation!!.visibility == View.VISIBLE) return STATE_REPAYMENT
+        else return STATE_FINAL
+    }
+
+    private fun showCorrectCard(cardState: Int) {
+        basicInformation!!.visibility = View.GONE
+        balanceInformation!!.visibility = View.GONE
+        repaymentInformation!!.visibility = View.GONE
+        finalInformation!!.visibility = View.GONE
+
+        when (cardState) {
+            STATE_BASIC -> basicInformation!!.visibility = View.VISIBLE
+            STATE_BALANCE -> balanceInformation!!.visibility = View.VISIBLE
+            STATE_REPAYMENT -> repaymentInformation!!.visibility = View.VISIBLE
+            else -> finalInformation!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun checkForSavedState(savedInstanceState: Bundle?) {
+        Log.d(TAG, "checkForSavedState - $savedInstanceState")
+        if (savedInstanceState != null) {
+            savedInstanceState.getString(BUNDLE_KEY_LOAN_NAME, "") { basicInformation!!.loanName.editText.setText(it) }
+            savedInstanceState.getString(BUNDLE_KEY_LOAN_PROVIDER, "") { basicInformation!!.loanProvider.editText.setText(it) }
+            savedInstanceState.getString(BUNDLE_KEY_LOAN_BALANCE, "") { balanceInformation!!.loanBalance.editText.setText(it) }
+            savedInstanceState.getString(BUNDLE_KEY_LOAN_INTEREST, "") { balanceInformation!!.loanInterest.editText.setText(it) }
+            savedInstanceState.getString(BUNDLE_KEY_LOAN_BASE_PAYMENT, "") { repaymentInformation!!.loanBasePayment.editText.setText(it) }
+            savedInstanceState.getString(BUNDLE_KEY_LOAN_EXTRA_PAYMENT, "") { repaymentInformation!!.loanExtraPayment.editText.setText(it) }
+
+            showCorrectCard(savedInstanceState.getInt(BUNDLE_KEY_LOAN_CARD_SHOWING, STATE_BASIC))
+        }
+    }
+
+    fun Bundle.getString(key: String, default: String, func: Loan.(s: String) -> Unit) {
+        val s = this.getString(key, default)
+        if (s.isNotEmpty())
+            loan!!.func(s)
     }
 }

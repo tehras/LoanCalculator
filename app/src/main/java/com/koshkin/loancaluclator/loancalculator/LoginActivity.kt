@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.crashlytics.android.Crashlytics
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,6 +17,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import io.fabric.sdk.android.Fabric
 
 class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     private val TAG = "LoginActivity"
@@ -41,6 +43,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Fabric.with(this, Crashlytics())
 
         Log.d(TAG, "onCreate is called")
 
@@ -191,9 +195,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                         firebaseAuthWithGoogle(account)
                 } else {
                     // Google Sign In failed, update UI appropriately
-                    // [START_EXCLUDE]
-                    sendBackFailedUse("Error authenticating, please try at a later time")
-                    // [END_EXCLUDE]
+                    // start backup
+                    val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+                    startActivityForResult(signInIntent, RC_SIGN_IN)
                 }
             }
         }.execute()

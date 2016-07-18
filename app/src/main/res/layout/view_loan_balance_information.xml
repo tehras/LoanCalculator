@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/gradient_sign_up_background">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/view_loan_balance_next"
@@ -15,7 +15,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
-        app:fabSize="mini"
         app:srcCompat="@drawable/ic_chevron_white" />
 
     <android.support.design.widget.FloatingActionButton
@@ -28,7 +27,6 @@
         android:layout_marginStart="16dp"
         android:clickable="true"
         app:backgroundTint="@color/colorRed"
-        app:fabSize="mini"
         app:srcCompat="@drawable/ic_chevron_backwards_white" />
 
     <LinearLayout
@@ -61,7 +59,7 @@
             android:paddingEnd="32dp"
             android:paddingStart="32dp"
             android:text="@string/loan_balance_help_content"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorHintText"
             app:layout_constraintLeft_toLeftOf="@+id/constraintLayout6"
             app:layout_constraintRight_toRightOf="@+id/constraintLayout6"
             app:layout_constraintTop_toBottomOf="@+id/view_simple_information_view" />
@@ -100,7 +98,7 @@
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
             android:text="@string/loan_interest_helper_text"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorHintText"
             app:layout_constraintLeft_toLeftOf="@+id/textView5"
             app:layout_constraintRight_toRightOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/view_loan_balance" />

@@ -22,6 +22,12 @@ fun Runner.paymentsRequest(paymentsList: PaymentsList, callbackObj: NetworkRespo
     this.execute(request)
 }
 
+fun Runner.deleteLoan(loan: Loan, callbackObj: NetworkResponse) {
+    val request = Request(Request.Type.DELETE, baseUrl + extLoan.replace("{loan-id}", loan.key), loan, callbackObj)
+
+    this.execute(request)
+}
+
 fun Runner.createLoanRequest(loan: Loan, callbackObj: NetworkResponse) {
     val request = Request(Request.Type.PUT, baseUrl + extLoans, loan, callbackObj)
     request.requestData = loan.getRequestObject()

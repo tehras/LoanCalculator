@@ -27,8 +27,11 @@
     <string name="new_loan_repayment_start_date">Repayment Start Date</string>
 
     <string name="landing_error">Error loading results</string>
+    <string name="error_message_deleting_loan">Sorry, there was an error deleting your loan. Please try again.</string>
+    <string name="error_message_new_loan">Sorry, there was an error creating your loan. Please try again.</string>
 
     <string name="accessibility_edit_button">Edit Loan Button</string>
+    <string name="accessibility_delete_button">Delete Loan Button</string>
     <string name="loan_name_help_content">Firstly, please provide the name of the loan. This will help you identify what loan you are looking at.\n(Minimum 3 Characters)</string>
     <string name="loan_provider_helper_text">Next, who is the provider of your loan?\n(Minimum 3 Characters)</string>
     <string name="loan_interest_helper_text">Now what is your interest. On the loan this will usually say "APR"</string>
@@ -39,4 +42,5 @@
     <string name="loan_payment_extra_help_content">Are you paying any extra? You can adjust this rate at a later point to better optimize your payments (>= $0)</string>
     <string name="view_loan_title_payments">Almost there… let\'s gather some payment information</string>
     <string name="view_loan_title_final_payments">Final Step!</string>
+    <string name="button_cancel">Cancel</string>
 </resources>
