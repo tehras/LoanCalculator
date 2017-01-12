@@ -37,6 +37,6 @@ class Loans : ParsingObject {
     }
 
     fun getLoan(key: String): Loan? {
-        return loans.get(key)
+        return loans[key]
     }
 }
